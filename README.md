@@ -1,5 +1,5 @@
 # Hello Bash
-Bash prompt configurator
+Make your unique bright and useful prompt in terminal! 🤓
 
 Installation 💾
 ```sh
