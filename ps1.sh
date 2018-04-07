@@ -214,14 +214,6 @@ then
   tail -n $TAIL_LINES ~/.bashrc.backup >> ~/.bashrc
   check_command_exec_status $?
 
-  echo 'Self-terminating'
-  # rm -f ${0##*/}
-  check_command_exec_status $?
-  # echo -e "Now restart your terminal or run this (yes, dot is a command):"
-  # echo ""
-  # echo -e "${cyan}. ~/.bashrc${NC}";
-  # echo ""
-  # exit 0;
   echo "Sourcing ~/.bashrc"
   source ~/.bashrc
   check_command_exec_status $?
