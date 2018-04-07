@@ -69,7 +69,7 @@ if [ -z $show_path ]; then
   if [ -z $host_path_color ]; then
     host_path_color=$(random)
   fi
-  path='\['${colors[$host_path_color]}'\]\W\['${NC}'\]'
+  path='\['${colors[$host_path_color]}'\]\w\['${NC}'\]'
 else
   path=''
 fi
@@ -102,7 +102,7 @@ else
 fi
 
 
-PS1=" ${user_name} ${host_name} ${path}${git_tools} "
+PS1=" ${user_name} ${host_name} ${path} ${git_tools} "
 
 BEGIN='### HELLO_BASH_BEGIN'
 END='### HELLO_BASH_END'
@@ -136,16 +136,9 @@ check_command_exec_status () {
 
 
   TOTAL_LINES=`cat ~/.bashrc | wc -l`
-  echo 'TOTAL_LINES: '$TOTAL_LINES
-
   BEGIN_LINE=`grep -n -e "${BEGIN}" ~/.bashrc | cut -d : -f 1`
-  echo 'BEGIN_LINE: '$BEGIN_LINE
-
   END_LINE=`grep -n -e "${END}" ~/.bashrc | cut -d : -f 1`
-  echo 'END_LINE: '$END_LINE
-
   TAIL_LINES=$(($TOTAL_LINES-$END_LINE+1))
-  echo 'TAIL_LINES: '$TAIL_LINES
 
   # Can't find both GGA markers
   if [[  -z $BEGIN_LINE ]] && [[  -z $END_LINE ]]
