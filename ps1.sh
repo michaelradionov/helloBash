@@ -73,9 +73,9 @@ fi
 
 PS1=" ${user_name}${host_name} ${path} "
 
-BEGIN='HELLO_BASH_BEGIN'
-END='HELLO_BASH_END'
-SOURCE=$PS1
+BEGIN='### HELLO_BASH_BEGIN'
+END='### HELLO_BASH_END'
+SOURCE='PS1="'$PS1'"'
 
 
 #
@@ -105,45 +105,88 @@ check_command_exec_status () {
 
 
   TOTAL_LINES=`cat ~/.bashrc | wc -l`
-  BEGIN_LINE=`grep -n -e ${BEGIN} ~/.bashrc | cut -d : -f 1`
-  END_LINE=`grep -n -e ${END} ~/.bashrc | cut -d : -f 1`
-  TAIL_LINES=$(($TOTAL_LINES-$END_LINE + 1))
+  echo 'TOTAL_LINES: '$TOTAL_LINES
+
+  BEGIN_LINE=`grep -n -e "${BEGIN}" ~/.bashrc | cut -d : -f 1`
+  echo 'BEGIN_LINE: '$BEGIN_LINE
+
+  END_LINE=`grep -n -e "${END}" ~/.bashrc | cut -d : -f 1`
+  echo 'END_LINE: '$END_LINE
+
+  TAIL_LINES=$(($TOTAL_LINES-$END_LINE+1))
+  echo 'TAIL_LINES: '$TAIL_LINES
 
   # Can't find both GGA markers
-  if [[ ! $BEGIN_LINE ]] && [[ ! $END_LINE ]] || [[ $BEGIN_LINE ]] && [[ $END_LINE ]]
+  if [[  -z $BEGIN_LINE ]] && [[  -z $END_LINE ]]
   then
     echo ''
-    echo -e "All right! Let's do it!";
+    echo -e "Can't find both markers so I add new block for you";
     echo ''
     echo "Making backup of your '~/.bashrc' in ~/.bashrc.backup ...";
     echo ''
     cp ~/.bashrc ~/.bashrc.backup
     check_command_exec_status $?
     echo ''
-    echo "Installing in 3 steps ...";
+    echo "Installing (3 steps) ...";
+
+    echo ''>> ~/.bashrc
+
     echo ${BEGIN}>> ~/.bashrc
     check_command_exec_status $?
-    curl -L -s ${SOURCE} >> ~/.bashrc
+
+    echo ${SOURCE} >> ~/.bashrc
     check_command_exec_status $?
+
     echo ${END}>> ~/.bashrc
     check_command_exec_status $?
+
+    echo ''>> ~/.bashrc
     # . ~/.bashrc
 
     echo 'Self-terminating'
-    rm -f ${0##*/}
+    # rm -f ${0##*/}
     check_command_exec_status $?
-    echo -e "Now restart your terminal or run this (yes, dot is a command):"
-    echo ""
-    echo -e "${cyan}. ~/.bashrc${NC}";
-    echo ""
-    exit 0;
+    # echo -e "Now restart your terminal or run this (yes, dot is a command):"
+    # echo ""
+    # echo -e "${cyan}. ~/.bashrc${NC}";
+    # echo ""
+    # exit 0;
+    return
   fi
 
   # One of markers is broken
-  if [[ ! $BEGIN_LINE ]] || [[ ! $END_LINE ]]
+  if [[ -z $BEGIN_LINE ]] || [[ -z  $END_LINE ]]
   then
     echo -e "It looks like one of two GGA markers is broken. Hmm.. I guess you'll need to fix it yourself.\n You must check that ${red}${BEGIN}${NC} is placed in the beginning and ${red}${END}${NC}  in the end of Go Git Aliases block.\n Self-terminating.";
-    rm -f ${0##*/}
+    # rm -f ${0##*/}
     check_command_exec_status $?
-    exit 0;
+    # exit 0;
+    return
   fi
+
+  # All right, found both markers
+if [[ $BEGIN_LINE ]] && [[ $END_LINE ]]
+then
+  echo -e "Found block. Updating...";
+  echo ''
+  echo "Making backup of your '~/.bashrc' in ~/.bashrc.backup ...";
+  echo ''
+  cp ~/.bashrc ~/.bashrc.backup
+  check_command_exec_status $?
+  echo ''
+  echo "Installing (3 steps) ...";
+  head -n $BEGIN_LINE ~/.bashrc.backup > ~/.bashrc
+  echo ${SOURCE} >> ~/.bashrc
+  tail -n $TAIL_LINES ~/.bashrc.backup >> ~/.bashrc
+
+  echo 'Self-terminating'
+  # rm -f ${0##*/}
+  check_command_exec_status $?
+  # echo -e "Now restart your terminal or run this (yes, dot is a command):"
+  # echo ""
+  # echo -e "${cyan}. ~/.bashrc${NC}";
+  # echo ""
+  # exit 0;
+  return
+
+fi
