@@ -1,14 +1,14 @@
 # Hello Bash
 Bash prompt configurator
 
-Installation
+Installation 💾
 ```
 git clone https://github.com/studioflag/helloBash.git
 cd helloBash
 . hellobash.sh
 ```
 
-Uninstallation
+Uninstallation ❌
 ```
 . hellobash.sh --delete
 ```
