@@ -53,10 +53,10 @@ if [[ $1 ]];
     check_command_exec_status $?
     echo ''
     echo "Uninstalling (4 steps) ...";
-    head -n $BEGIN_LINE ~/.bashrc.backup > ~/.bashrc
+    head -n $(($BEGIN_LINE-1)) ~/.bashrc.backup > ~/.bashrc
     check_command_exec_status $?
 
-    tail -n $TAIL_LINES ~/.bashrc.backup >> ~/.bashrc
+    tail -n $(($TAIL_LINES-1)) ~/.bashrc.backup >> ~/.bashrc
     check_command_exec_status $?
 
     echo "Sourcing ~/.bashrc"
