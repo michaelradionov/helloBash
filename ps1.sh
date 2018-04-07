@@ -170,24 +170,16 @@ check_command_exec_status () {
     echo ''>> ~/.bashrc
     # . ~/.bashrc
 
-    echo 'Self-terminating'
-    # rm -f ${0##*/}
+    echo "Sourcing ~/.bashrc"
+    source ~/.bashrc
     check_command_exec_status $?
-    # echo -e "Now restart your terminal or run this (yes, dot is a command):"
-    # echo ""
-    # echo -e "${cyan}. ~/.bashrc${NC}";
-    # echo ""
-    # exit 0;
     return
   fi
 
   # One of markers is broken
   if [[ -z $BEGIN_LINE ]] || [[ -z  $END_LINE ]]
   then
-    echo -e "It looks like one of two GGA markers is broken. Hmm.. I guess you'll need to fix it yourself.\n You must check that ${red}${BEGIN}${NC} is placed in the beginning and ${red}${END}${NC}  in the end of Go Git Aliases block.\n Self-terminating.";
-    # rm -f ${0##*/}
-    check_command_exec_status $?
-    # exit 0;
+    echo -e "It looks like one of two GGA markers is broken. Hmm.. I guess you'll need to fix it yourself.\n You must check that ${red}${BEGIN}${NC} is placed in the beginning and ${red}${END}${NC}  in the end of Go Git Aliases block.";
     return
   fi
 
