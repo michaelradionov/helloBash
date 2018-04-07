@@ -52,7 +52,7 @@ if [[ $1 ]];
     cp ~/.bashrc ~/.bashrc.backup
     check_command_exec_status $?
     echo ''
-    echo "Installing (4 steps) ...";
+    echo "Uninstalling (4 steps) ...";
     head -n $BEGIN_LINE ~/.bashrc.backup > ~/.bashrc
     check_command_exec_status $?
 
