@@ -42,7 +42,9 @@ fi
 
 user_name='\['${colors[$user_name_color]}'\]'${user_name}'\['${NC}'\]'
 
-# Your host
+#
+# HOST
+#
 read -p "Host Name? (empty for system value): " host_name
 if [ -z $host_name ]; then
   host_name='\h';
@@ -56,10 +58,11 @@ fi
 
 host_name='\['${colors[$host_name_color]}'\]@'${host_name}'\['${NC}'\]'
 
-# Show path?
+#
+# PATH
+#
 read -p "Do you want your path in PS1 (empty for yes, 'n' for no): " show_path
 
-# Your path color
 if [ -z $show_path ]; then
   listColors
   read -p "Host path color? (1-8): " host_path_color
@@ -71,7 +74,30 @@ else
   path=''
 fi
 
-PS1=" ${user_name}${host_name} ${path} "
+#
+# GIT
+#
+read -p "Do you want git branch and dirty files count? (empty for yes, 'n' for no): " show_git
+
+if [ -z $show_git ]; then
+  listColors
+  read -p "Git tools color? (1-8): " git_color
+  if [ -z $git_color ]; then
+    git_color=$(random)
+  fi
+
+  # SOME FUNCTIONS FOR GIT
+  git_branch=`git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'`
+  number_of_changed_files=`nocf=$(git status -s 2> /dev/null | wc -l | tr -d " "); if [ $nocf -ne 0 ];then echo " "$nocf" ";fi`
+
+  git_tools='\['${colors[$git_color]}'\]'${git_branch}${number_of_changed_files}'\['${NC}'\]'
+  # echo 'number_of_changed_files: ' $number_of_changed_files
+else
+  git_tools=''
+fi
+
+
+PS1=" ${user_name} ${host_name} ${path}${git_tools}"
 
 BEGIN='### HELLO_BASH_BEGIN'
 END='### HELLO_BASH_END'
