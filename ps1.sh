@@ -222,7 +222,9 @@ then
   # echo -e "${cyan}. ~/.bashrc${NC}";
   # echo ""
   # exit 0;
+  echo "Sourcing ~/.bashrc"
   . ~/.bashrc
+  check_command_exec_status $?
   return
 
 fi
