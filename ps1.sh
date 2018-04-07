@@ -223,7 +223,7 @@ then
   # echo ""
   # exit 0;
   echo "Sourcing ~/.bashrc"
-  . ~/.bashrc
+  source ~/.bashrc
   check_command_exec_status $?
   return
 
