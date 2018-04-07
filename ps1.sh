@@ -87,17 +87,22 @@ if [ -z $show_git ]; then
   fi
 
   # SOME FUNCTIONS FOR GIT
-  git_branch=`git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'`
-  number_of_changed_files=`nocf=$(git status -s 2> /dev/null | wc -l | tr -d " "); if [ $nocf -ne 0 ];then echo " "$nocf" ";fi`
-
-  git_tools='\['${colors[$git_color]}'\]'${git_branch}${number_of_changed_files}'\['${NC}'\]'
+  GIT_FUNCTIONS='git_branch (){
+      git branch 2> /dev/null | sed -e "/^[^*]/d" -e "s/* \(.*\)/ (\1)/";
+    };
+    git_changed_files () {
+      nocf=$(git status -s 2> /dev/null | wc -l | tr -d " ");
+      if [ $nocf -ne 0 ];
+        then echo " "$nocf" ";
+      fi;};'
+  git_tools='\['${colors[$git_color]}'\]\$(git_branch)\$(git_changed_files)\['${NC}'\]'
   # echo 'number_of_changed_files: ' $number_of_changed_files
 else
   git_tools=''
 fi
 
 
-PS1=" ${user_name} ${host_name} ${path}${git_tools}"
+PS1=" ${user_name} ${host_name} ${path}${git_tools} "
 
 BEGIN='### HELLO_BASH_BEGIN'
 END='### HELLO_BASH_END'
@@ -153,11 +158,14 @@ check_command_exec_status () {
     cp ~/.bashrc ~/.bashrc.backup
     check_command_exec_status $?
     echo ''
-    echo "Installing (3 steps) ...";
+    echo "Installing (4 steps) ...";
 
     echo ''>> ~/.bashrc
 
     echo ${BEGIN}>> ~/.bashrc
+    check_command_exec_status $?
+
+    echo "$GIT_FUNCTIONS" >> ~/.bashrc
     check_command_exec_status $?
 
     echo ${SOURCE} >> ~/.bashrc
@@ -200,10 +208,18 @@ then
   cp ~/.bashrc ~/.bashrc.backup
   check_command_exec_status $?
   echo ''
-  echo "Installing (3 steps) ...";
+  echo "Installing (4 steps) ...";
   head -n $BEGIN_LINE ~/.bashrc.backup > ~/.bashrc
+  check_command_exec_status $?
+
+  echo "$GIT_FUNCTIONS" >> ~/.bashrc
+  check_command_exec_status $?
+
   echo ${SOURCE} >> ~/.bashrc
+  check_command_exec_status $?
+
   tail -n $TAIL_LINES ~/.bashrc.backup >> ~/.bashrc
+  check_command_exec_status $?
 
   echo 'Self-terminating'
   # rm -f ${0##*/}
@@ -213,6 +229,7 @@ then
   # echo -e "${cyan}. ~/.bashrc${NC}";
   # echo ""
   # exit 0;
+  . ~/.bashrc
   return
 
 fi
