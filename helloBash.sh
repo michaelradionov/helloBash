@@ -35,7 +35,7 @@ if [ -z $user_name ]; then
 fi
 
 listColors
-read -p "User name color? (1-8): " user_name_color
+read -p "User name color? (0-6, empty for random): " user_name_color
 if [ -z $user_name_color ]; then
   user_name_color=$(random)
 fi
@@ -51,7 +51,7 @@ if [ -z $host_name ]; then
 fi
 
 listColors
-read -p "Host name color? (1-8): " host_name_color
+read -p "Host name color? (0-6, empty for random): " host_name_color
 if [ -z $host_name_color ]; then
   host_name_color=$(random)
 fi
@@ -65,7 +65,7 @@ read -p "Do you want your path in PS1 (empty for yes, 'n' for no): " show_path
 
 if [ -z $show_path ]; then
   listColors
-  read -p "Host path color? (1-8): " host_path_color
+  read -p "Host path color? (0-6, empty for random): " host_path_color
   if [ -z $host_path_color ]; then
     host_path_color=$(random)
   fi
@@ -81,7 +81,7 @@ read -p "Do you want git branch and dirty files count? (empty for yes, 'n' for n
 
 if [ -z $show_git ]; then
   listColors
-  read -p "Git tools color? (1-8): " git_color
+  read -p "Git tools color? (0-6, empty for random): " git_color
   if [ -z $git_color ]; then
     git_color=$(random)
   fi
