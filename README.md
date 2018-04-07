@@ -1,7 +1,7 @@
 # Hello Bash
 Make your unique bright and useful prompt in terminal! 🤓
 
-![](/images/2018/04/hello_bash.gif)
+![](/assets/hello_bash.gif)
 
 Installation 💾
 ```sh
