@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+# set -e
 
 # Colors
 green='\033[1;32m'       # 1 Green
@@ -11,6 +11,63 @@ purple='\033[1;35m'      # 6 Purple
 cyan='\033[1;36m'        # 7 Cyan
 white='\033[1;37m'       # 8 White
 NC='\033[0m'             # Text Reset
+
+BEGIN='### HELLO_BASH_BEGIN'
+END='### HELLO_BASH_END'
+
+TOTAL_LINES=`cat ~/.bashrc | wc -l`
+BEGIN_LINE=`grep -n -e "${BEGIN}" ~/.bashrc | cut -d : -f 1`
+END_LINE=`grep -n -e "${END}" ~/.bashrc | cut -d : -f 1`
+TAIL_LINES=$(($TOTAL_LINES-$END_LINE+1))
+
+#
+#
+# Showing command execution status to user
+#
+#
+
+check_command_exec_status () {
+  if [ $1 -eq 0 ]
+    then
+      echo -e "${yellow}SUCCESS!${NC}"
+      echo
+      sleep 1
+  else
+    echo -e "${red}ERROR${NC}"
+    echo
+
+  fi
+}
+
+#
+# UNINSTALLER
+#
+
+if [[ $1 ]];
+  then
+    echo -e "Uninstalling Hello Bash script";
+    echo ''
+    echo "Making backup of your '~/.bashrc' in ~/.bashrc.backup ...";
+    echo ''
+    cp ~/.bashrc ~/.bashrc.backup
+    check_command_exec_status $?
+    echo ''
+    echo "Installing (4 steps) ...";
+    head -n $BEGIN_LINE ~/.bashrc.backup > ~/.bashrc
+    check_command_exec_status $?
+
+    tail -n $TAIL_LINES ~/.bashrc.backup >> ~/.bashrc
+    check_command_exec_status $?
+
+    echo "Sourcing ~/.bashrc"
+    source ~/.bashrc
+    check_command_exec_status $?
+  return
+fi;
+
+#
+# DIALOG BEFORE INSTALL
+#
 
 colors=($black $red $yellow $blue $purple $cyan $white)
 
@@ -101,44 +158,15 @@ else
   git_tools=''
 fi
 
-
 PS1=" ${user_name} ${host_name} ${path} ${git_tools} "
 
-BEGIN='### HELLO_BASH_BEGIN'
-END='### HELLO_BASH_END'
 SOURCE='PS1="'$PS1'"'
-
-
-#
-#
-# Showing command execution status to user
-#
-#
-
-check_command_exec_status () {
-  if [ $1 -eq 0 ]
-    then
-      echo -e "${yellow}SUCCESS!${NC}"
-      echo
-      sleep 1
-  else
-    echo -e "${red}ERROR${NC}"
-    echo
-
-  fi
-}
 
 #
 #
 # INSTALLER
 #
 #
-
-
-  TOTAL_LINES=`cat ~/.bashrc | wc -l`
-  BEGIN_LINE=`grep -n -e "${BEGIN}" ~/.bashrc | cut -d : -f 1`
-  END_LINE=`grep -n -e "${END}" ~/.bashrc | cut -d : -f 1`
-  TAIL_LINES=$(($TOTAL_LINES-$END_LINE+1))
 
   # Can't find both GGA markers
   if [[  -z $BEGIN_LINE ]] && [[  -z $END_LINE ]]
