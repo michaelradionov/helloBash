@@ -3,14 +3,19 @@ Make your unique bright and useful prompt in terminal! 🤓
 
 ![](/assets/hello_bash_faster.gif)
 
-Installation 💾
+# Quick installation 💾
 ```sh
-git clone https://github.com/studioflag/helloBash.git
-cd helloBash
-. hellobash.sh
+curl -L https://gogit.ru/hello | bash
 ```
 
-Uninstallation ❌
+# Usage
+
+Activation ✅
 ```sh
-. hellobash.sh --delete
+hellobash
+```
+
+Deactivation ❌
+```sh
+hellobash --delete
 ```
