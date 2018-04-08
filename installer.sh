@@ -33,7 +33,7 @@ check_command_exec_status $?
 echo ''
 echo -e "Making alias \033[1;35m helloBash \033[0m in your ~/.bashrc ..."
 echo ''
-echo 'alias helloBash=". ~/.helloBash/helloBash.sh"'
+echo 'alias helloBash=". ~/.helloBash/helloBash.sh"' >> ~/.bashrc
 check_command_exec_status $?
 echo ''
 echo 'Self-terminating'
