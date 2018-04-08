@@ -1,5 +1,5 @@
 # Hello Bash
-Make your unique bright and useful prompt in terminal! 🤓
+Make your unique bright and useful prompt in terminal! 🤓 By the way you can use emoji (cmd+ctrl+space).
 
 ![](/assets/hello-bash.gif)
 
