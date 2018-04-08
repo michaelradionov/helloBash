@@ -126,7 +126,7 @@ if [ -z $show_path ]; then
   if [ -z $host_path_color ]; then
     host_path_color=$(random)
   fi
-  path='\['${colors[$host_path_color]}'\]\w\['${NC}'\]'
+  path='\['${colors[$host_path_color]}'\]\W\['${NC}'\]'
 else
   path=''
 fi
