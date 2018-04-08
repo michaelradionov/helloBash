@@ -28,7 +28,7 @@ check_command_exec_status $?
 echo ''
 echo 'Putting script in ~/.helloBash ...'
 echo ''
-curl https://raw.githubusercontent.com/studioflag/helloBash/master/helloBash.sh >> ~/.helloBash/helloBash.sh
+curl https://raw.githubusercontent.com/michealradionov/helloBash/master/helloBash.sh >> ~/.helloBash/helloBash.sh
 check_command_exec_status $?
 echo ''
 echo -e "Making alias \033[1;35m helloBash \033[0m in your ~/.bashrc ..."
