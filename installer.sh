@@ -36,6 +36,11 @@ echo ''
 echo 'alias helloBash=". ~/.helloBash/helloBash.sh"'
 check_command_exec_status $?
 echo ''
+echo 'Self-terminating'
+echo ''
+rm -f ${0##*/}
+check_command_exec_status $?
+echo ''
 echo 'Done! Do not forget to source your ~/.bashrc by typing:'
 echo ''
 echo 'source \033[1;35m ~/.bashrc \033[0m'
