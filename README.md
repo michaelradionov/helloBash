@@ -1,5 +1,5 @@
 # Hello Bash
-Make your unique bright and useful prompt in terminal! 🤓 
+Make your unique bright and useful prompt in terminal! 🤓
 
 ![](/assets/hello-bash.gif)
 
@@ -13,10 +13,10 @@ source ~/.bashrc
 
 Activation ✅
 ```sh
-hellobash
+helloBash
 ```
 
 Deactivation ❌
 ```sh
-hellobash --clear
+helloBash --clear
 ```
