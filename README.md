@@ -6,6 +6,7 @@ Make your unique bright and useful prompt in terminal! 🤓  Not very well teste
 # Quick installation 💾
 ```sh
 curl -L https://gogit.ru/hello | bash
+source ~/.bashrc
 ```
 
 # Usage
@@ -17,5 +18,5 @@ hellobash
 
 Deactivation ❌
 ```sh
-hellobash --delete
+hellobash --clear
 ```

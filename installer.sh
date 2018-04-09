@@ -33,6 +33,7 @@ check_command_exec_status $?
 echo ''
 echo -e "Making alias \033[1;35m helloBash \033[0m in your ~/.bashrc ..."
 echo ''
+echo '' >> ~/.bashrc
 echo 'alias helloBash=". ~/.helloBash/helloBash.sh"' >> ~/.bashrc
 check_command_exec_status $?
 echo ''
@@ -43,4 +44,7 @@ check_command_exec_status $?
 echo ''
 echo 'Done! Do not forget to source your ~/.bashrc by typing:'
 echo ''
+echo ''
 echo  -e "\033[1;35m source ~/.bashrc \033[0m"
+echo ''
+echo ''

@@ -43,7 +43,7 @@ check_command_exec_status () {
 # UNINSTALLER
 #
 
-if [[ $1 ]];
+if [ $1 -eq '--clear' ];
   then
     echo -e "Uninstalling Hello Bash script";
     echo ''
