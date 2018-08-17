@@ -45,7 +45,7 @@ function helloBash () {
 # UNINSTALLER
 #
 
-if [ $1 -eq '--clear' ];
+if [ $1 = "--clear" ];
   then
     echo -e "Uninstalling Hello Bash script";
     echo ''
