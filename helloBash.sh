@@ -39,6 +39,8 @@ check_command_exec_status () {
   fi
 }
 
+helloBash(){
+
 #
 # UNINSTALLER
 #
@@ -240,3 +242,4 @@ then
   return
 
 fi
+}
