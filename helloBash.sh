@@ -39,7 +39,7 @@ check_command_exec_status () {
   fi
 }
 
-helloBash () {
+function helloBash () {
 
 #
 # UNINSTALLER
