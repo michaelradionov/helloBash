@@ -5,8 +5,7 @@ Make your unique bright and useful prompt in terminal! 🤓
 
 # Quick installation 💾
 ```sh
-curl -L https://gogit.ru/hello | bash
-source ~/.bashrc
+eval "$(curl "https://raw.githubusercontent.com/michaelradionov/gg_installer/master/gg_installer.sh")" && gg_installer hello_bash
 ```
 
 # Usage
