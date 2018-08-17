@@ -31,7 +31,6 @@ check_command_exec_status () {
     then
       echo -e "${yellow}SUCCESS!${NC}"
       echo
-      sleep 1
   else
     echo -e "${red}ERROR${NC}"
     echo
@@ -45,7 +44,7 @@ function helloBash () {
 # UNINSTALLER
 #
 
-if [ $1 = "--clear" ];
+if [[ $1 = "--clear" ]];
   then
     echo -e "Uninstalling Hello Bash script";
     echo ''
