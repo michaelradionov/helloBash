@@ -20,6 +20,9 @@ BEGIN_LINE=`grep -n -e "${BEGIN}" ~/.bashrc | cut -d : -f 1`
 END_LINE=`grep -n -e "${END}" ~/.bashrc | cut -d : -f 1`
 TAIL_LINES=$(($TOTAL_LINES-$END_LINE+1))
 
+SCRIPTS_FOLDER=~/.gg_tools
+SCRIPT_NAME='HelloBashGeneratedPrompt'
+
 #
 #
 # Showing command execution status to user
@@ -40,31 +43,24 @@ check_command_exec_status () {
 
 function helloBash () {
 
-#
-# UNINSTALLER
-#
 
-if [[ $1 = "--clear" ]];
-  then
-    echo -e "Uninstalling Hello Bash script";
-    echo ''
-    echo "Making backup of your '~/.bashrc' in ~/.bashrc.backup ...";
-    echo ''
-    cp ~/.bashrc ~/.bashrc.backup
-    check_command_exec_status $?
-    echo ''
-    echo "Uninstalling (2 steps) ...";
-    head -n $(($BEGIN_LINE-1)) ~/.bashrc.backup > ~/.bashrc
-    check_command_exec_status $?
 
-    tail -n $(($TAIL_LINES-1)) ~/.bashrc.backup >> ~/.bashrc
-    check_command_exec_status $?
+  #
+  # UNINSTALLER
+  #
 
-    echo "Sourcing ~/.bashrc"
-    source ~/.bashrc
-    check_command_exec_status $?
-  return
-fi;
+  if [[ $1 = "--clear" ]];
+    then
+      echo -e "Removing ${SCRIPTS_FOLDER}/${SCRIPT_NAME}.sh"
+      rm -f ${SCRIPTS_FOLDER}/${SCRIPT_NAME}.sh
+      check_command_exec_status $?
+
+      echo -e "Sourcing your ~/.bashrc"
+      source ~/.bashrc
+      check_command_exec_status $?
+    return
+  fi;
+
 
 #
 # DIALOG BEFORE INSTALL
@@ -169,76 +165,25 @@ SOURCE='PS1="'$PS1'"'
 #
 #
 
-  # Can't find both GGA markers
-  if [[  -z $BEGIN_LINE ]] && [[  -z $END_LINE ]]
-  then
-    echo ''
-    echo -e "Can't find both markers so I add new block for you";
-    echo ''
-    echo "Making backup of your '~/.bashrc' in ~/.bashrc.backup ...";
-    echo ''
-    cp ~/.bashrc ~/.bashrc.backup
-    check_command_exec_status $?
-    echo ''
-    echo "Installing (4 steps) ...";
+# creating scripts directory if doesn't exists
 
-    echo ''>> ~/.bashrc
-
-    echo ${BEGIN}>> ~/.bashrc
-    check_command_exec_status $?
-
-    echo "$GIT_FUNCTIONS" >> ~/.bashrc
-    check_command_exec_status $?
-
-    echo ${SOURCE} >> ~/.bashrc
-    check_command_exec_status $?
-
-    echo ${END}>> ~/.bashrc
-    check_command_exec_status $?
-
-    echo ''>> ~/.bashrc
-    # . ~/.bashrc
-
-    echo "Sourcing ~/.bashrc"
-    source ~/.bashrc
-    check_command_exec_status $?
-    return
-  fi
-
-  # One of markers is broken
-  if [[ -z $BEGIN_LINE ]] || [[ -z  $END_LINE ]]
-  then
-    echo -e "It looks like one of two GGA markers is broken. Hmm.. I guess you'll need to fix it yourself.\n You must check that ${red}${BEGIN}${NC} is placed in the beginning and ${red}${END}${NC}  in the end of Go Git Aliases block.";
-    return
-  fi
-
-  # All right, found both markers
-if [[ $BEGIN_LINE ]] && [[ $END_LINE ]]
-then
-  echo -e "Found block. Updating...";
-  echo ''
-  echo "Making backup of your '~/.bashrc' in ~/.bashrc.backup ...";
-  echo ''
-  cp ~/.bashrc ~/.bashrc.backup
+if [ ! -d  $SCRIPTS_FOLDER ]; then
+  echo -e "Making ${white}${SCRIPTS_FOLDER}${NC} directory for any Go Git Script"
+  mkdir $SCRIPTS_FOLDER
   check_command_exec_status $?
-  echo ''
-  echo "Installing (4 steps) ...";
-  head -n $BEGIN_LINE ~/.bashrc.backup > ~/.bashrc
-  check_command_exec_status $?
-
-  echo "$GIT_FUNCTIONS" >> ~/.bashrc
-  check_command_exec_status $?
-
-  echo ${SOURCE} >> ~/.bashrc
-  check_command_exec_status $?
-
-  tail -n $TAIL_LINES ~/.bashrc.backup >> ~/.bashrc
-  check_command_exec_status $?
-
-  echo "Sourcing ~/.bashrc"
-  source ~/.bashrc
-  check_command_exec_status $?
-  return
-
+  else
+  echo -e "Found ${white}${SCRIPTS_FOLDER}${NC} folder. Continuing ..."
 fi
+
+echo -e "Putting Git funstions in ${white}${SCRIPTS_FOLDER}/${SCRIPT_NAME}.sh${NC} folder"
+echo "$GIT_FUNCTIONS" >> ${SCRIPTS_FOLDER}/${SCRIPT_NAME}.sh
+check_command_exec_status $?
+
+echo -e "Putting new prompt in ${white}${SCRIPTS_FOLDER}/${SCRIPT_NAME}.sh${NC} folder"
+echo "${SOURCE}" >> ${SCRIPTS_FOLDER}/${SCRIPT_NAME}.sh
+check_command_exec_status $?
+
+echo -e "Sourcing new prompt"
+source ${SCRIPTS_FOLDER}/${SCRIPT_NAME}.sh
+check_command_exec_status $?
 }
