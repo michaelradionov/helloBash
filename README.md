@@ -6,7 +6,7 @@ Make your unique bright and useful prompt in terminal! 🤓
 # Features
 - Customise text and color for your User and Host
 - See your current Git branch and number of changed and untracked files
-- Randomizer can pick all the colors for you
+- Randomizer can pick all the colors for you!
 
 # Quick installation
 ```shell
