@@ -8,7 +8,7 @@ Make your unique bright and useful prompt in terminal! 🤓
 - See your current Git branch and number of changed and untracked files
 - Randomizer can pick all the colors for you
 
-# Quick installation 💾
+# Quick installation
 ```shell
 eval "$(curl "https://raw.githubusercontent.com/michaelradionov/gg_installer/master/gg_installer.sh")" && gg_installer hello_bash
 ```
