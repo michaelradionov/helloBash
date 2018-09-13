@@ -83,34 +83,38 @@ echo "Hello! This is PS1 installer!"
 #
 # NAME
 #
-read -p "User Name? (empty for system value): " user_name
-if [ -z $user_name ]; then
-  user_name='\u';
+read -p "User name? (enter value or type 'system' for system value): " user_name
+if [[ $user_name == "system" ]]; then
+    user_name='\u';
 fi
 
-listColors
-read -p "User name color? (0-7, empty for random): " user_name_color
-if [ -z $user_name_color ]; then
-  user_name_color=$(random)
-fi
+if [[ $user_name != '' ]]; then
+  listColors
+  read -p "User name color? (0-7, empty for random): " user_name_color
+  if [ -z $user_name_color ]; then
+    user_name_color=$(random)
+  fi
 
-user_name='\['${colors[$user_name_color]}'\]'${user_name}'\['${NC}'\]'
+  user_name='\['${colors[$user_name_color]}'\]'${user_name}'\['${NC}'\]'
+fi
 
 #
 # HOST
 #
-read -p "Host Name? (empty for system value): " host_name
-if [ -z $host_name ]; then
-  host_name='\h';
+read -p "Host Name? (enter value or type 'system' for system value): " host_name
+if [[ $host_name == "system" ]]; then
+    host_name='\h';
 fi
 
-listColors
-read -p "Host name color? (0-7, empty for random): " host_name_color
-if [ -z $host_name_color ]; then
-  host_name_color=$(random)
-fi
+if [[ $host_name != '' ]]; then
+  listColors
+  read -p "Host name color? (0-7, empty for random): " host_name_color
+  if [ -z $host_name_color ]; then
+    host_name_color=$(random)
+  fi
 
-host_name='\['${colors[$host_name_color]}'\]@'${host_name}'\['${NC}'\]'
+  host_name='\['${colors[$host_name_color]}'\]@'${host_name}'\['${NC}'\]'
+fi
 
 #
 # PATH
