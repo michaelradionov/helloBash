@@ -119,15 +119,23 @@ fi
 #
 # PATH
 #
-read -p "Do you want your path in PS1 (empty for yes, 'n' for no): " show_path
+read -p "Do you want your path in PS1 (empty for full path, 'short' for short path, 'n' for no): " show_path
 
-if [ -z $show_path ]; then
+if [ -z $show_path ] || [ $show_path = 'short' ] ; then
+#  Choose color
   listColors
   read -p "Host path color? (0-7, empty for random): " host_path_color
   if [ -z $host_path_color ]; then
     host_path_color=$(random)
   fi
-  path='\['${colors[$host_path_color]}'\]\W\['${NC}'\]'
+
+  if [ -z $show_path ]; then
+#  Full path
+    path='\['${colors[$host_path_color]}'\]\w\['${NC}'\]'
+    else
+#   Short path
+    path='\['${colors[$host_path_color]}'\]\W\['${NC}'\]'
+  fi
 else
   path=''
 fi
